@@ -36,7 +36,7 @@ Leads to:
 
     y = -2 + 1 / p
 
- 
+**Node**: if y is superior to this value than the crop grower is actually better off with a contract 
 with the plot:
 
 http://pasteboard.co/nBVw3TWki.png
@@ -80,4 +80,27 @@ After the contract his expected value is:
 
 **Insurance is cool :- )))))**
 
+## What about the insurance fund side?
 
+
+If the even occur the fund will loose:
+
+    x * (1 + y)
+
+and otherwise, it will win:
+
+    x
+
+So the expected value for the insurance fund is:
+
+    E = p * (-x) * (1 + y) + (1 - p) * x
+
+Let's look at the value of **y** that makes this expected value positive:
+
+    p * (-x) * (1 + y) + (1 - p) * x >= 0
+is equivalent to
+
+    -2 + 1/p >= y
+
+we found the same condition which is normal and therefore setting a fee in the amount will *insure* that the fun have a positive pay out in the long run. 
+ 
