@@ -1,6 +1,6 @@
 # wETHER
 
-A project to put weather insurance and environmental prediction markets on the Ethereum blockchain.
+A project to put a "fair" weather insurance and environmental prediction markets on the Ethereum blockchain.
 Here is the math rational behind the parameters of the contract
 
 ## The Situation of the crop grower
@@ -36,7 +36,7 @@ Leads to:
 
     y = -2 + 1 / p
 
-**Node**: if y is superior to this value than the crop grower is actually better off with a contract 
+**Node**: if **y** is superior to this value than the crop grower is actually better off with a contract 
 with the plot:
 
 http://pasteboard.co/nBVw3TWki.png
