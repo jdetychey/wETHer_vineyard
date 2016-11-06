@@ -63,7 +63,7 @@ contract InsurancePool is usingOraclize {
     
     /* PROBABILITY METHODS */
     
-    function setQuote(bytes32 _hash, string _url, string _latitude, string _longitude) returns(bool){
+    function setQuote(bytes32 _hash, string _url, bytes32 _latitude, bytes32 _longitude) returns(bool){
         address _quote = new InsuranceQuote(msg.sender, _hash, _url, _latitude, _latitude);
         if(_quote == address(0x0))
             return false;
@@ -71,9 +71,9 @@ contract InsurancePool is usingOraclize {
         return true;
     }
     
-    function updateQuote(bytes32 _hash, string _url, string _latitude, string _longitude) constant returns(bool) {
+    function updateQuote(bytes32 _hash, string _url, bytes32 _latitude, bytes32 _longitude) constant returns(bool) {
         address q = quotes[msg.sender];
-        if(!q.delegatecall(bytes4(sha3("getProbability(bytes32, string, string, string)")),_hash, _url, _latitude, _longitude)) {
+        if(!q.delegatecall(bytes4(sha3("getProbability(bytes32, string, bytes32, bytes32)")),_hash, _url, _latitude, _longitude)) {
             return false;
         }
         return true;
@@ -89,8 +89,9 @@ contract InsurancePool is usingOraclize {
     
     /* INSURANCE POLICY METHODS */
     
-    function createNewPolicy(uint _timeout,
-                            uint _invariants, 
+    function createNewPolicy(bytes32 _hash,
+                            string _url,
+                            string _timeout, 
                             bool _position,
                             string _description) minimumLiquidity returns(address) {
         address q = quotes[msg.sender];
@@ -104,9 +105,8 @@ contract InsurancePool is usingOraclize {
         if(!q.delegatecall(bytes4(sha3("cancel()"))))
             throw;
             
-        insurees[msg.sender] = new InsurancePolicy(msg.sender, _latitude, _longitude, _timeout, 
-                                                _position, _invariants, _description);
-        
+        insurees[msg.sender] = new InsurancePolicy(msg.sender, _hash, _url, _latitude, _longitude, _timeout, 
+                                                _position, _description);
         balanceOf[this] -= _coverage;
         pool -= _coverage;
         uint _total = (msg.value - fee) + _coverage;

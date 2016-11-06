@@ -25,19 +25,19 @@ contract InsuranceQuote is usingOraclize {
     string constant suffix = ").daily.data[0].precipProbability";
     
     
-    function InsuranceQuote(address _insuree, bytes32 _hash, string _url, string _latitude, string _longitude) {
+    function InsuranceQuote(address _insuree, bytes32 _hash, string _url, bytes32 _latitude, bytes32 _longitude) {
         OAR = OraclizeAddrResolverI(0x51efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa);
         insuree = _insuree;
         getProbability(_hash, _url, _latitude, _longitude);
     }
     
-    function getProbability(bytes32 _hash, string _url, string _latitude, string _longitude) onlyInsuree {
+    function getProbability(bytes32 _hash, string _url, bytes32 _latitude, bytes32 _longitude) onlyInsuree {
          if(!InsuranceLib.checkUrlHash(_hash, _url)) 
             throw;
         if(!InsuranceLib.checkProbHash(_hash, prefix, _latitude, _longitude, suffix))
             throw;
-        latitude = InsuranceLib.stringToBytes32(_latitude);
-        longitude = InsuranceLib.stringToBytes32(_longitude);
+        latitude = _latitude;
+        longitude = _longitude;
             
         oraclize_query("URL", _url);
     }

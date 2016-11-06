@@ -21,10 +21,12 @@ library InsuranceLib {
     
     function checkProbHash(bytes32 _hash,
                         string _prefix,
-                        string _latitude, 
-                        string _longitude,
+                        bytes32 _latitude, 
+                        bytes32 _longitude,
                         string _suffix) internal returns(bool) {
-        bytes32 probHash = sha3(_prefix, _latitude, ",", _longitude, _suffix);
+        string memory latitude = bytes32ToString(_latitude);
+        string memory longitude = bytes32ToString(_longitude);
+        bytes32 probHash = sha3(_prefix, latitude, ",", longitude, _suffix);
         
         for(uint i = 0; i < _hash.length; i++) {
             if(_hash[i] != probHash[i])
@@ -37,9 +39,11 @@ library InsuranceLib {
                             string _prefix, 
                             bytes32 _latitude, 
                             bytes32 _longitude, 
-                            uint _timestamp, 
+                            string _timestamp, 
                             string _suffix) internal returns(bool) {
-        bytes32 resolverHash = sha3(_prefix, _latitude, ",", _longitude, ",", _timestamp, _suffix);
+        string memory latitude = bytes32ToString(_latitude);
+        string memory longitude = bytes32ToString(_longitude);
+        bytes32 resolverHash = sha3(_prefix, latitude, ",", longitude, ",", _timestamp, _suffix);
         
         for(uint i=0; i< _hash.length; i++) {
             if(_hash[i] != resolverHash[i])
