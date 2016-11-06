@@ -89,44 +89,57 @@ contract InsurancePool is usingOraclize {
     
     /* INSURANCE POLICY METHODS */
     
-    function createNewPolicy(uint _invariants, 
+    function createNewPolicy(uint _timeout,
+                            uint _invariants, 
                             bool _position,
                             string _description) minimumLiquidity returns(address) {
         address q = quotes[msg.sender];
         bytes32 _latitude = bytes32(InsuranceQuote(q).latitude());
         bytes32 _longitude = bytes32(InsuranceQuote(q).longitude());
-        pool += msg.value;
+        uint _probability = getQuote();
+        
+        uint _coverage = InsuranceLib.calcCoverage(msg.value, fee, _probability);
+        
+        delete quotes[msg.sender];
+        if(!q.delegatecall(bytes4(sha3("cancel()"))))
+            throw;
+            
+        insurees[msg.sender] = new InsurancePolicy(msg.sender, _latitude, _longitude, _timeout, 
+                                                _position, _invariants, _description);
+        
+        balanceOf[this] -= _coverage;
+        pool -= _coverage;
+        uint _total = (msg.value - fee) + _coverage;
+        
+        if(!insurees[msg.sender].send(_total))
+            throw;
+        
         
     }
-    /*
-    function newPolicy(bytes32 _latitude,
-                    bytes32 _longitude, 
-                    uint64 _timeout,
-                    bool _position,
-                    uint _invariants,
-                    string _description) onlyAbove returns(address) {
-                        
-            if(msg.value > 5 || msg.value < 1) throw;
-            pool += msg.value;    
-            oraclize_query("json(https://api.darksky.net/forecast/e5fa70950b02e623da2a1c7159f8ee93/53.324238,-6.3857865).daily.data[0].precipProbability");
-            
-            if(probability > 50) throw;
-            
-            uint _payout = msg.value * (-1 - fee + 100/probability);
-            
-            policies[msg.sender] = new Policy(msg.sender, _latitude, _longitude, _timeout, _position, _description);
-            if(!policies[msg.sender].send(_payout)) {
-               msg.sender.send(msg.value);
-               pool -= msg.value;
-            } else {
-                pool -= _payout;
-            }
-    }
-    
-    */
-    
+
     /* LIQUIDITY METHODS */
     
+    function aquireDrops(uint _amount) returns(bool) {
+        if(pool < 100 ether && balanceOf[this] > _amount) {
+            balanceOf[this] -= _amount;
+            balanceOf[msg.sender] += _amount;
+            return true;
+        }
+        return false;
+    }
     
+    function transferDrops(address _reciever, uint _amount) returns(bool) {
+        if(balanceOf[msg.sender] > _amount) {
+            balanceOf[msg.sender] -= _amount;
+            balanceOf[_reciever] += _amount;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function() {
+        pool += msg.value;
+    }
     
 }

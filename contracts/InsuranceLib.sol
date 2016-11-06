@@ -2,8 +2,12 @@ pragma solidity ^0.4.0;
 
 library InsuranceLib {
     
-    function calcProbability(int _value, int _fee, int _probability) internal returns(int) {
-        return _value * (-1 - _fee + 100/_probability);
+    function calcCoverage(uint _principal, uint _fee, uint _probability) internal returns(uint) {
+        if(_probability > 50) throw;
+        uint _total = _principal - _fee;
+        uint _div = (100 - (100 % _probability)) / _probability;
+        
+        return (_total - (_total % _div)) / _div;
     }
     
     function checkUrlHash(bytes32 _hash, string _url) internal returns(bool) {
