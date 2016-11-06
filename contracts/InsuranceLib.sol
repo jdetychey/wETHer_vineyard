@@ -23,10 +23,12 @@ library InsuranceLib {
                         string _prefix,
                         bytes32 _latitude, 
                         bytes32 _longitude,
+                        string _midfix,
+                        string _num,
                         string _suffix) internal returns(bool) {
         string memory latitude = bytes32ToString(_latitude);
         string memory longitude = bytes32ToString(_longitude);
-        bytes32 probHash = sha3(_prefix, latitude, ",", longitude, _suffix);
+        bytes32 probHash = sha3(_prefix, latitude, ",", longitude,_midfix, _num, _suffix);
         
         for(uint i = 0; i < _hash.length; i++) {
             if(_hash[i] != probHash[i])
