@@ -40,8 +40,9 @@ contract InsurancePool is usingOraclize {
         
         OAR = OraclizeAddrResolverI(0x51efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa);
         
+        admin = msg.sender;
         drops = _supply;
-        balanceOf[this] = drops;
+        balanceOf[admin] = drops;
         admin = msg.sender;
         fee = _fee;
         minimum = _minimum;
@@ -107,7 +108,7 @@ contract InsurancePool is usingOraclize {
             
         insurees[msg.sender] = new InsurancePolicy(msg.sender, _hash, _url, _latitude, _longitude, _timeout, 
                                                 _position, _description);
-        balanceOf[this] -= _coverage;
+        balanceOf[admin] -= _coverage;
         pool -= _coverage;
         uint _total = (msg.value - fee) + _coverage;
         
@@ -120,8 +121,8 @@ contract InsurancePool is usingOraclize {
     /* LIQUIDITY METHODS */
     
     function aquireDrops(uint _amount) returns(bool) {
-        if(pool < 100 ether && balanceOf[this] > _amount) {
-            balanceOf[this] -= _amount;
+        if(pool < 100 ether && balanceOf[admin] > _amount) {
+            balanceOf[admin] -= _amount;
             balanceOf[msg.sender] += _amount;
             return true;
         }
