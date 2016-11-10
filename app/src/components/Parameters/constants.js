@@ -1,0 +1,2 @@
+
+export const STORE_PARAMETERS = 'STORE_PARAMETERS';
