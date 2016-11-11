@@ -1,10 +1,12 @@
 pragma solidity ^0.4.0;
-import "https://github.com/oraclize/ethereum-api/oraclizeAPI_0.4.sol";
-import "InsuranceLib.sol";
+//import "https://github.com/oraclize/ethereum-api/oraclizeAPI_0.4.sol";
+//import "https://github.com/jdetychey/wETHer_vineyard/blob/master/contracts/InsuranceLib.sol";
 
 
-contract InsurancePool is usingOraclize {
-    using InsuranceLib for *;
+contract InsurancePool { /* won't require Oraclize in the pool
+
+is usingOraclize { 
+    using InsuranceLib for *;*/
     
     /* FIELDS */
     
@@ -16,9 +18,13 @@ contract InsurancePool is usingOraclize {
     uint minimum;
     
     uint public pool;
-    uint public drops;
+    // uint public drops;
     
     address admin;
+    address auth;
+    
+    /*auth is the public key (the address) that will be used to authentificate
+    data provided by the client with ecrecover*/
     
     /* MODIFIERS */
     
@@ -33,14 +39,14 @@ contract InsurancePool is usingOraclize {
     }
     
     /* CONSTRUCTOR */
-    
+    // InsurancePool comes with supply fee and minimum
     function InsurancePool(uint _supply, uint _fee, uint _minimum) {
         
-        OAR = OraclizeAddrResolverI(0x51efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa);
+        //OAR = OraclizeAddrResolverI(0x51efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa);
         
         admin = msg.sender;
-        drops = _supply;
-        balanceOf[admin] = drops;
+        //drops = _supply;
+        //balanceOf[admin] = drops;
         admin = msg.sender;
         fee = _fee;
         minimum = _minimum;
@@ -60,9 +66,11 @@ contract InsurancePool is usingOraclize {
         admin = _admin;
     }
     
-    /* PROBABILITY METHODS */
     
-    function setQuote(bytes32 _hash, string _url, bytes32 _latitude, bytes32 _longitude) returns(bool){
+    
+    /* PROBABILITY METHODS */
+    /* will now be done on server side and signed by a priv key */
+    /*function setQuote(bytes32 _hash, string _url, bytes32 _latitude, bytes32 _longitude) returns(bool){
         address _quote = new InsuranceQuote(msg.sender, _hash, _url, _latitude, _latitude);
         if(_quote == address(0x0))
             return false;
@@ -85,7 +93,7 @@ contract InsurancePool is usingOraclize {
         return usingOraclize.parseInt(probability);
     }
     
-    
+    */
     /* INSURANCE POLICY METHODS */
    
     function createNewPolicy(bytes32 _hash,
@@ -118,7 +126,8 @@ contract InsurancePool is usingOraclize {
     
 
     /* LIQUIDITY METHODS */
-    
+    //to be added later 
+    /*
     function aquireDrops(uint _amount) returns(bool) {
         if(pool < 100 ether && balanceOf[admin] > _amount) {
             balanceOf[admin] -= _amount;
@@ -159,10 +168,10 @@ contract InsuranceQuote is usingOraclize {
         _;
     }
     
-    
+*/
     /* PROBABILITY QUERY STRINGS */
-    
-    string constant prefix = "json(https://api.darksky.net/forecast/e5fa70950b02e623da2a1c7159f8ee93/";
+    //done server wise
+/*    string constant prefix = "json(https://api.darksky.net/forecast/e5fa70950b02e623da2a1c7159f8ee93/";
     string constant midfix = ").daily.data[";
     string constant suffix = "].precipProbability";
     
@@ -194,9 +203,10 @@ contract InsuranceQuote is usingOraclize {
         selfdestruct(msg.sender);
     }
 }
-
-contract InsurancePolicy is usingOraclize {
-    
+*/
+contract InsurancePolicy { 
+    // is usingOraclize {
+    // resolution will be done manually and integrated later
     uint public balance;
     
     address insuree;
@@ -208,17 +218,17 @@ contract InsurancePolicy is usingOraclize {
     uint public start;
     uint public timestamp;
     
-    uint cycles;
-    uint invariants;
+    //uint cycles;
+    //uint invariants;
     
     string public description;
     
     string public url;
     
     /* RESOLVER QUERY STRINGS */
-    string constant prefix = "json(https://api.darksky.net/forecast/e5fa70950b02e623da2a1c7159f8ee93/";
+    /*string constant prefix = "json(https://api.darksky.net/forecast/e5fa70950b02e623da2a1c7159f8ee93/";
     string constant suffix = ").daily.data[0].precipIntensityMax,precipType";
-    
+    */
     
     bool public position;
     
@@ -237,7 +247,7 @@ contract InsurancePolicy is usingOraclize {
                     bool _position,
                     string _description) {
                         
-        OAR = OraclizeAddrResolverI(0x51efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa);
+        //OAR = OraclizeAddrResolverI(0x51efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa);
         balance = msg.value;
         insuree = _insuree;
         url = _url;
@@ -248,19 +258,19 @@ contract InsurancePolicy is usingOraclize {
         position = _position;
         description = _description;
         
-        cycles = 7;
-        invariants = 2;
+        //cycles = 7;
+        //invariants = 2;
         
-        if(!InsuranceLib.checkUrlHash(_hash, _url))
+        /*if(!InsuranceLib.checkUrlHash(_hash, _url))
             throw;
         
         if(!InsuranceLib.checkResolverHash(_hash, prefix, _latitude, _longitude, _timestamp, suffix))
             throw;
         
-        oraclize_query("URL", _url);
+        oraclize_query("URL", _url);*/
     }
     
-    function __callback(bytes32 myid, string result) {
+    /*function __callback(bytes32 myid, string result) {
         if (msg.sender != oraclize_cbAddress()) throw;
         uint precipeMaxAmount = parseInt(result, 10);
         if((precipeMaxAmount > 0) != position) {
@@ -278,12 +288,12 @@ contract InsurancePolicy is usingOraclize {
         }
         
     }
-    
-    function updateURL(bytes32 _hash, string _url, string _timestamp) onlyInsuree {
+    */
+    /*function updateURL(bytes32 _hash, string _url, string _timestamp) onlyInsuree {
         if(!InsuranceLib.checkResolverHash(_hash, prefix, latitude, longitude, _timestamp, suffix))
             throw;
     }
-    
+    */
     function payout() private {
             selfdestruct(insuree);
     }
