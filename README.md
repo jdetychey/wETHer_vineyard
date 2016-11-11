@@ -1,6 +1,7 @@
-# wETHER
+# wETHER vineyard edition
 
-A project to put a "fair" weather insurance and environmental prediction markets on the Ethereum blockchain.
+this project is an alternate version of wETHER, see https://github.com/Physes/wETHER . It uses less calls from oraclize as most of the data for the insurance policy contract is provided server wise with signed hash. The factory contract verifies the integrity of the hash and the signature.
+wETHER is a project to put a "fair" weather insurance and environmental prediction markets on the Ethereum blockchain.
 Here is the math rational behind the parameters of the contract
 
 ## The Situation of the crop grower
