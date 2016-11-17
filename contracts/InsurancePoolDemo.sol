@@ -1,9 +1,8 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.4;
 
 contract InsurancePool { 
-    mapping(address => address) quotes;
     mapping(address => address) insurees;
-
+   
     uint fee;
     uint minimum;
     address admin;
@@ -50,7 +49,13 @@ contract InsurancePool {
         if(!insurees[msg.sender].send(_total))
             throw;
 
+ 
 
+
+    }
+    
+      function kill()onlyAdmin {
+        selfdestruct(admin);
     }
 }
 
