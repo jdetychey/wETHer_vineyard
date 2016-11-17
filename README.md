@@ -4,7 +4,37 @@ this project is an alternate version of wETHER, see https://github.com/Physes/wE
 wETHER is a project to put a "fair" weather insurance and environmental prediction markets on the Ethereum blockchain.
 Here is the math rational behind the parameters of the contract
 
-## The Situation of the crop grower
+
+##app folder
+
+this folder is not relevant yet 
+
+
+##contracts folder
+
+### InsuranceLib.sol	
+
+former librairy used in the original wETHer project, this contract is not used anymore.
+
+
+### InsurancePool.sol
+
+new version of InsurancePool, this contract is still in WiP
+
+
+### InsurancePoolDemo.sol
+
+a light but working version of InsurancePool.sol for demo purpose
+
+
+##sample folder
+
+this folder is not relevant anymore and is kept until deleted or proved usefull
+
+
+##Former ReadMe:
+
+### The Situation of the crop grower
 
 We consider a crop grower that expect an event with probability p, if this event occur he will have 0 and if it does not occur he will have 100. This amount can be set to anything, I pick 100 so has not to have too much abstraction.
 
@@ -14,7 +44,7 @@ He has an expected value of:
 
 The payout of the contract should give a payout that reproduce this expected value minus a fee.
 
-## How much should the insurance found send?
+### How much should the insurance found send?
 
 We denote **x** the value that the farmer commit to the contract and **y** the value that the Insurance found will commit.
 
@@ -81,7 +111,7 @@ After the contract his expected value is:
 
 **Insurance is cool :- )))))**
 
-## What about the insurance fund side?
+### What about the insurance fund side?
 
 
 If the even occur the fund will loose:
