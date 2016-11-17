@@ -1,5 +1,8 @@
 pragma solidity ^0.4.0;
-
+/*
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$ The LIB won't be used $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 library InsuranceLib {
     
     function calcCoverage(uint _principal, uint _fee, uint _probability) internal returns(uint) {
@@ -77,3 +80,4 @@ library InsuranceLib {
         return string(bytesString);
     }
 }
+*/
