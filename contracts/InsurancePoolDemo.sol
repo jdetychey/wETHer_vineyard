@@ -2,10 +2,11 @@ pragma solidity ^0.4.4;
 
 contract InsurancePool { 
     mapping(address => address) insurees;
-   
-    uint fee;
-    uint minimum;
-    address admin;
+
+
+    uint public fee;
+    uint public minimum;
+    address public admin;
 
     modifier onlyAdmin {
         if(msg.sender != admin) throw;
@@ -38,6 +39,8 @@ contract InsurancePool {
     function changeAdmin(address _admin) onlyAdmin {
         admin = _admin;
     }
+    
+    /* POLICY METHOD */
 
     function createNewPolicy(string _url,
                              uint _coverage,
@@ -49,11 +52,10 @@ contract InsurancePool {
         if(!insurees[msg.sender].send(_total))
             throw;
 
- 
-
 
     }
     
+    /* BLOCKCHAIN CLEARING */
       function kill()onlyAdmin {
         selfdestruct(admin);
     }
