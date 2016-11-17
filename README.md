@@ -31,6 +31,7 @@ a light but working version of InsurancePool.sol for demo purpose
 
 this folder is not relevant anymore and is kept until deleted or proved useful
 
+--------
 
 ##Former ReadMe:
 
