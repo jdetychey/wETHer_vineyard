@@ -287,7 +287,7 @@ contract InsurancePolicy {
 
         //OAR = OraclizeAddrResolverI(0x51efaf4c8b3c9afbd5ab9f4bbc82784ab6ef8faa);
         balance = msg.value;
-        Resolver = 0xblabla4c8b3c9afbd5ab9f4bbc82784ab6ef8faa //hardcoded
+        Resolver = 0x21dbbd0A06b53B1270A02b0870EcDc83910D47c0 //hardcoded 
         insuree = _insuree;
         url = _url;
         InsurancePool = msg.sender;
