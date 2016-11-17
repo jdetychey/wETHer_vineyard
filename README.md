@@ -29,7 +29,7 @@ a light but working version of InsurancePool.sol for demo purpose
 
 ##sample folder
 
-this folder is not relevant anymore and is kept until deleted or proved usefull
+this folder is not relevant anymore and is kept until deleted or proved useful
 
 
 ##Former ReadMe:
