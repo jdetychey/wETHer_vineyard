@@ -26,7 +26,7 @@ new version of InsurancePool, this contract is still in WiP
 
 a light but working version of InsurancePool.sol for demo purpose
 
-This contract is deploy on the test see [deploying tx](https://testnet.etherscan.io/tx/0x3a58f64858262c581a12e55ff18d6497f9a0c7c65efbd46668feae7d6992e709)
+This contract is deploy on the test see [deploying tx](https://testnet.etherscan.io/tx/0x8033c483730ad16100906ce9e3f2b4b354c7526661b696c9b3bd2b3516ac03c1)
 
 
 
