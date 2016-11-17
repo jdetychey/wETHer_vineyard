@@ -12,8 +12,8 @@ is usingOraclize {
 
     mapping(address => address) quotes;
     mapping(address => address) insurees;
-    mapping(address => uint) balanceOf;
-
+//    mapping(address => uint) balanceOf;
+/* balanceOf is only used in the drops DAO scheeme */
     uint fee;
     uint minimum;
 
