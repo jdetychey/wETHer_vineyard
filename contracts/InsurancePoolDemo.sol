@@ -19,7 +19,7 @@ contract InsurancePool {
 
     function InsurancePool() {
         admin = msg.sender;
-        fee = 0;
+        fee = _fee * 1000000000000000000;
     }
 
     /* ADMIN METHODS */
@@ -39,6 +39,9 @@ contract InsurancePool {
    function createNewPolicy(string _url,
                             uint256 _coverage,
                             string _description) payable {
+                                                            _coverage = _coverage * 1000000000000000000;
+                                //otherwise coverage is in wei
+
        uint256 _total = msg.value - fee + _coverage;
        address _insuree = msg.sender;
        address newContract = (new InsurancePolicy).value(_total)(_insuree,
